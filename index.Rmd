@@ -1,0 +1,43 @@
+---
+title: "West Georgia Map"
+author: "Yinning Zhang"
+date: "November 26, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+## Creating a Map with the location of University of West Georgia labeled with its icon
+
+
+```{r MapUWG, echo=TRUE}
+library(leaflet)
+UWGIcon <- makeIcon(iconUrl = "http://media.bizj.us/view/img/2504431/university-of-west-georgia-logo*750xx731-411-0-126.jpg", iconWidth = 731/20, iconHeight = 411/20)
+uwg_map <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = UWGIcon, lat = 33.5735, lng = -85.1028)
+uwg_map
+```
+
+## Mapping the cities in West Georgia and their populations. 
+```{r MapWestGA, echo=TRUE}
+WestGA_cities <- data.frame(name = c("Bowdon", "Carrollton", "Mount Zion", "Roopville", "Temple", "Villa Rica", "Whitesburg"),
+                            pop = c(2040, 26562, 1696, 218, 4228, 13956, 596),
+                            lat = c(33.5379, 33.5801, 33.6343, 33.4565, 33.7371, 33.7321, 33.4940),
+                            lng = c(-85.2533, -85.0766, -85.1872, -85.1308, -85.0324, -84.9191, -84.9138))
+WestGA_cities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight = 1, radius = sqrt(WestGA_cities$pop)*30)
+```
+
+
